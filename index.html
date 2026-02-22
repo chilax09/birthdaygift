@@ -42,7 +42,7 @@
 
         .glitch {
             font-size: 35px;
-            animation: glitch 0.2s infinite;
+            animation: glitch 0.15s infinite;
         }
 
         @keyframes glitch {
@@ -51,18 +51,33 @@
             100% { text-shadow: 2px -2px lime; }
         }
 
-        .slide {
-            display: none;
+        #slideshow {
+            position: relative;
             width: 100vw;
             height: 100vh;
+            background: black;
+        }
+
+        #slideImage {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+        }
+
+        #caption {
+            position: absolute;
+            bottom: 60px;
+            width: 100%;
+            text-align: center;
+            font-size: 22px;
+            background: rgba(0,0,0,0.6);
+            padding: 12px 0;
         }
     </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
 <div id="login" class="center">
     <h1>🔐 Memory Vault</h1>
     <p>Identity verification required.</p>
@@ -72,40 +87,75 @@
     <p id="message"></p>
 </div>
 
-<!-- VERIFYING -->
 <div id="verifying" class="center">
     <h2>Verifying identity...</h2>
 </div>
 
-<!-- GLITCH + TYPE AREA -->
 <div id="glitchScreen" class="center">
     <div id="glitchText" class="glitch">USER FOUND.</div>
     <div id="typedText" style="margin-top:20px; font-size:28px;"></div>
 </div>
 
-<!-- SLIDESHOW -->
 <div id="slideshow">
-    <img class="slide" src="photo1.jpg">
-    <img class="slide" src="photo2.jpg">
-    <img class="slide" src="photo3.jpg">
+    <img id="slideImage">
+    <div id="caption"></div>
 </div>
+
+<audio id="typingSound" preload="auto" src="typing.mp3"></audio>
 
 <script>
 
-function checkAccess() {
-    var sum = document.getElementById("birthSum").value;
-    var age = document.getElementById("age").value;
+let typingAudio = document.getElementById("typingSound");
 
-    if (sum === "9" && age === "17") {
+const photos = [
+    {src:"photo1.jpg", caption:"A love that started long before 17."},
+    {src:"photo8.jpg", caption:"Some friendships feel like destiny."},
+    {src:"photo11.jpg", caption:"And some memories are ours alone."},
+
+    {src:"photo2.jpg", caption:"From tiny steps..."},
+    {src:"photo9.jpg", caption:"To laughter that never fades."},
+    {src:"photo12.jpg", caption:"You grew into someone incredible."},
+
+    {src:"photo3.jpg", caption:"Every year shaping you."},
+    {src:"photo10.jpg", caption:"Every smile lighting rooms."},
+    {src:"photo13.jpg", caption:"Every moment unforgettable."},
+
+    {src:"photo14.jpg", caption:"Strength you didn’t even see."},
+    {src:"photo5.jpg", caption:"Courage you carry effortlessly."},
+
+    {src:"photo6.jpg", caption:"Kindness that changes people."},
+    {src:"photo7.jpg", caption:"And a heart that feels like home."},
+
+    {src:"photo7.jpg", caption:"17 looks beautiful on you."},
+    {src:"photo7.jpg", caption:"And this is only the beginning."}
+];
+
+function unlockAudio() {
+    typingAudio.volume = 0;
+    typingAudio.play().then(() => {
+        typingAudio.pause();
+        typingAudio.currentTime = 0;
+    }).catch(()=>{});
+}
+
+function checkAccess() {
+
+    unlockAudio();
+
+    if (
+        document.getElementById("birthSum").value === "9" &&
+        document.getElementById("age").value === "17"
+    ) {
 
         document.getElementById("login").style.display = "none";
         document.getElementById("verifying").style.display = "block";
 
         setTimeout(function() {
+
             document.getElementById("verifying").style.display = "none";
             document.getElementById("glitchScreen").style.display = "block";
 
-            setTimeout(startTypingSequence, 1200);
+            setTimeout(startTypingSequence, 1000);
 
         }, 2000);
 
@@ -116,18 +166,27 @@ function checkAccess() {
 }
 
 function typeText(text, callback) {
+
     let i = 0;
-    const speed = 70;
     const typedText = document.getElementById("typedText");
+
     typedText.innerHTML = "";
+
+    typingAudio.volume = 0.25;
+    typingAudio.loop = true;
+    typingAudio.play();
 
     function typing() {
         if (i < text.length) {
             typedText.innerHTML += text.charAt(i);
             i++;
-            setTimeout(typing, speed);
-        } else if (callback) {
-            setTimeout(callback, 1000);
+            setTimeout(typing, 80);
+        } else {
+
+            typingAudio.pause();
+            typingAudio.currentTime = 0;
+
+            if (callback) setTimeout(callback, 1000);
         }
     }
 
@@ -173,24 +232,23 @@ function startTypingSequence() {
 }
 
 function startSlideshow() {
+
     document.getElementById("slideshow").style.display = "block";
 
-    var slides = document.getElementsByClassName("slide");
-    var index = 0;
+    let index = 0;
+    const img = document.getElementById("slideImage");
+    const caption = document.getElementById("caption");
 
     function showSlide() {
-        for (var i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slides[index].style.display = "block";
+        img.src = photos[index].src;
+        caption.innerText = photos[index].caption;
+
         index++;
-        if (index >= slides.length) {
-            index = 0;
-        }
+        if (index >= photos.length) index = 0;
     }
 
     showSlide();
-    setInterval(showSlide, 3000);
+    setInterval(showSlide, 4000);
 }
 
 </script>
