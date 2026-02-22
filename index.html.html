@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memory Vault</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            background: black;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background: hotpink;
+            color: white;
+            cursor: pointer;
+        }
+
+        #verifying, #glitchScreen, #slideshow {
+            display: none;
+        }
+
+        .glitch {
+            font-size: 35px;
+            animation: glitch 0.2s infinite;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px red; }
+            50% { text-shadow: -2px -2px blue; }
+            100% { text-shadow: 2px -2px lime; }
+        }
+
+        .slide {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="center">
+    <h1>🔐 Memory Vault</h1>
+    <p>Identity verification required.</p>
+    <input type="number" id="birthSum" placeholder="Sum of your birthday"><br>
+    <input type="number" id="age" placeholder="Your age"><br>
+    <button onclick="checkAccess()">Unlock</button>
+    <p id="message"></p>
+</div>
+
+<!-- VERIFYING -->
+<div id="verifying" class="center">
+    <h2>Verifying identity...</h2>
+</div>
+
+<!-- GLITCH + TYPE AREA -->
+<div id="glitchScreen" class="center">
+    <div id="glitchText" class="glitch">USER FOUND.</div>
+    <div id="typedText" style="margin-top:20px; font-size:28px;"></div>
+</div>
+
+<!-- SLIDESHOW -->
+<div id="slideshow">
+    <img class="slide" src="photo1.jpg">
+    <img class="slide" src="photo2.jpg">
+    <img class="slide" src="photo3.jpg">
+</div>
+
+<script>
+
+function checkAccess() {
+    var sum = document.getElementById("birthSum").value;
+    var age = document.getElementById("age").value;
+
+    if (sum === "9" && age === "17") {
+
+        document.getElementById("login").style.display = "none";
+        document.getElementById("verifying").style.display = "block";
+
+        setTimeout(function() {
+            document.getElementById("verifying").style.display = "none";
+            document.getElementById("glitchScreen").style.display = "block";
+
+            setTimeout(startTypingSequence, 1200);
+
+        }, 2000);
+
+    } else {
+        document.getElementById("message").innerText =
+            "Access denied. Imposter detected.";
+    }
+}
+
+function typeText(text, callback) {
+    let i = 0;
+    const speed = 70;
+    const typedText = document.getElementById("typedText");
+    typedText.innerHTML = "";
+
+    function typing() {
+        if (i < text.length) {
+            typedText.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        } else if (callback) {
+            setTimeout(callback, 1000);
+        }
+    }
+
+    typing();
+}
+
+function eraseText(callback) {
+    const typedText = document.getElementById("typedText");
+    let text = typedText.innerHTML;
+    let i = text.length;
+
+    function deleting() {
+        if (i > 0) {
+            typedText.innerHTML = text.substring(0, i - 1);
+            i--;
+            setTimeout(deleting, 40);
+        } else if (callback) {
+            setTimeout(callback, 500);
+        }
+    }
+
+    deleting();
+}
+
+function startTypingSequence() {
+
+    document.getElementById("glitchText").style.display = "none";
+
+    typeText("Welcome Kesari Jotsna", function() {
+        eraseText(function() {
+            typeText("Hope you have a great 17th birthday", function() {
+                eraseText(function() {
+                    typeText("Sit back and enjoy the show.", function() {
+                        setTimeout(function() {
+                            document.getElementById("glitchScreen").style.display = "none";
+                            startSlideshow();
+                        }, 1000);
+                    });
+                });
+            });
+        });
+    });
+}
+
+function startSlideshow() {
+    document.getElementById("slideshow").style.display = "block";
+
+    var slides = document.getElementsByClassName("slide");
+    var index = 0;
+
+    function showSlide() {
+        for (var i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[index].style.display = "block";
+        index++;
+        if (index >= slides.length) {
+            index = 0;
+        }
+    }
+
+    showSlide();
+    setInterval(showSlide, 3000);
+}
+
+</script>
+
+</body>
+</html>
