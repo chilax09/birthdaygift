@@ -119,6 +119,8 @@ h2 {
 <div id="messagesSection">
     <h2>💌 Heartfelt Messages</h2>
     <div id="messagesContainer"></div>
+
+    <!-- Image Letters -->
     <img src="letter1.jpeg" id="letter1" class="letterImage">
     <img src="letter2.jpeg" id="letter2" class="letterImage">
 </div>
@@ -142,7 +144,9 @@ const photos = [
     {src:"photo14.jpeg"},
     {src:"photo8.jpg"},
     {src:"photo6.jpeg"},
-    {src:"photo7.jpeg"}
+    {src:"photo7.jpeg"},
+    {src:"photo4.jpeg"},
+    {src:"photo15.jpeg"}
 ];
 
 const messages = [
@@ -153,13 +157,22 @@ const messages = [
 "With all our love, your parents.",
 
 "",
+"",
 
 "To my lovely bestie, Happy Birthday ❤️",
 "The way you love us is really special.",
 "Don’t know what to say — everything about you is special to me.",
 "Hope this continues till the stars go.",
-"Love you soo much Keshuu."
+"Love you soo much Keshuu.",
 
+"",
+"",
+
+"Now this one is from me...",
+"I don’t even know where to start.",
+"You’ve made my life brighter in more ways than you realise.",
+"17 looks beautiful on you.",
+"And I’m always, always going to be right here."
 ];
 
 function unlockAudio() {
@@ -262,25 +275,25 @@ function startSlideshow() {
     let index = 0;
     const img = document.getElementById("slideImage");
 
-    function showSlide() {
+    function showNextSlide() {
 
         if (index >= photos.length) {
-            clearInterval(slideInterval);
-            setTimeout(showMessagesSection, 2000);
+            document.getElementById("slideshow").style.display = "none";
+            showMessagesSection();
             return;
         }
 
         img.src = photos[index].src;
         index++;
+
+        setTimeout(showNextSlide, 4000);
     }
 
-    showSlide();
-    let slideInterval = setInterval(showSlide, 4000);
+    showNextSlide();
 }
 
 function showMessagesSection() {
 
-    document.getElementById("slideshow").style.display = "none";
     document.getElementById("messagesSection").style.display = "block";
     document.body.style.overflowY = "auto";
 
@@ -294,21 +307,19 @@ function showMessagesSection() {
 
         setTimeout(() => {
             p.style.opacity = 1;
-        }, i * 1500);
+        }, i * 1400);
     });
 
     setTimeout(() => {
         document.getElementById("letter1").style.opacity = 1;
-    }, messages.length * 1500 + 1000);
+    }, messages.length * 1400 + 1000);
 
     setTimeout(() => {
         document.getElementById("letter2").style.opacity = 1;
-    }, messages.length * 1500 + 3000);
+    }, messages.length * 1400 + 3000);
 }
 
 </script>
 
 </body>
 </html>
-
-
