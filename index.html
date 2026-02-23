@@ -1,79 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Memory Vault</title>
+<title>Memory Vault</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Courier New', monospace;
-            background: black;
-            color: white;
-            text-align: center;
-            overflow: hidden;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    background: black;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+}
 
-        .center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
-        input {
-            padding: 10px;
-            margin: 10px;
-            border-radius: 5px;
-            border: none;
-        }
+input {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+}
 
-        button {
-            padding: 10px 20px;
-            border-radius: 5px;
-            border: none;
-            background: hotpink;
-            color: white;
-            cursor: pointer;
-        }
+button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background: hotpink;
+    color: white;
+    cursor: pointer;
+}
 
-        #verifying, #glitchScreen, #slideshow {
-            display: none;
-        }
+#verifying, #glitchScreen, #slideshow, #messagesSection {
+    display: none;
+}
 
-        .glitch {
-            font-size: 35px;
-            animation: glitch 0.15s infinite;
-        }
+.glitch {
+    font-size: 35px;
+    animation: glitch 0.15s infinite;
+}
 
-        @keyframes glitch {
-            0% { text-shadow: 2px 2px red; }
-            50% { text-shadow: -2px -2px blue; }
-            100% { text-shadow: 2px -2px lime; }
-        }
+@keyframes glitch {
+    0% { text-shadow: 2px 2px red; }
+    50% { text-shadow: -2px -2px blue; }
+    100% { text-shadow: 2px -2px lime; }
+}
 
-        #slideshow {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            background: black;
-        }
+#slideshow {
+    width: 100vw;
+    height: 100vh;
+    background: black;
+}
 
-        #slideImage {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+#slideImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        #caption {
-            position: absolute;
-            bottom: 60px;
-            width: 100%;
-            text-align: center;
-            font-size: 22px;
-            background: rgba(0,0,0,0.6);
-            padding: 12px 0;
-        }
-    </style>
+#messagesSection {
+    padding: 80px 20px;
+    max-width: 850px;
+    margin: auto;
+    text-align: left;
+}
+
+.messageLine {
+    opacity: 0;
+    margin: 18px 0;
+    transition: opacity 1.2s ease;
+    font-size: 19px;
+    line-height: 1.6;
+}
+
+.letterImage {
+    width: 100%;
+    margin-top: 40px;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 50px;
+}
+</style>
 </head>
 
 <body>
@@ -98,7 +114,13 @@
 
 <div id="slideshow">
     <img id="slideImage">
-    <div id="caption"></div>
+</div>
+
+<div id="messagesSection">
+    <h2>💌 Heartfelt Messages</h2>
+    <div id="messagesContainer"></div>
+    <img src="letter1.jpeg" id="letter1" class="letterImage">
+    <img src="letter2.jpeg" id="letter2" class="letterImage">
 </div>
 
 <audio id="typingSound" preload="auto" src="typing.mp3"></audio>
@@ -111,20 +133,33 @@ const photos = [
     {src:"photo1.jpeg"},
     {src:"photo5.jpg"},
     {src:"photo3.jpeg"},
-
     {src:"photo2.jpeg"},
     {src:"photo9.jpeg"},
     {src:"photo12.jpeg"},
-
     {src:"photo11.jpeg"},
     {src:"photo10.jpeg"},
     {src:"photo13.jpeg"},
-
     {src:"photo14.jpeg"},
     {src:"photo8.jpg"},
-
     {src:"photo6.jpeg"},
-    {src:"photo7.jpeg"},
+    {src:"photo7.jpeg"}
+];
+
+const messages = [
+
+"Hi Keshu! Wishing you a Happy Birthday, dear! 🎉",
+"You are truly a wonderful soul — always caring, always helping, and a cherished friend to everyone around you.",
+"May your day be filled with joy, love and blessings.",
+"With all our love, your parents.",
+
+"",
+
+"To my lovely bestie, Happy Birthday ❤️",
+"The way you love us is really special.",
+"Don’t know what to say — everything about you is special to me.",
+"Hope this continues till the stars go.",
+"Love you soo much Keshuu."
+
 ];
 
 function unlockAudio() {
@@ -148,12 +183,9 @@ function checkAccess() {
         document.getElementById("verifying").style.display = "block";
 
         setTimeout(function() {
-
             document.getElementById("verifying").style.display = "none";
             document.getElementById("glitchScreen").style.display = "block";
-
             setTimeout(startTypingSequence, 1000);
-
         }, 2000);
 
     } else {
@@ -163,10 +195,8 @@ function checkAccess() {
 }
 
 function typeText(text, callback) {
-
     let i = 0;
     const typedText = document.getElementById("typedText");
-
     typedText.innerHTML = "";
 
     typingAudio.volume = 0.25;
@@ -179,10 +209,8 @@ function typeText(text, callback) {
             i++;
             setTimeout(typing, 80);
         } else {
-
             typingAudio.pause();
             typingAudio.currentTime = 0;
-
             if (callback) setTimeout(callback, 1000);
         }
     }
@@ -209,7 +237,6 @@ function eraseText(callback) {
 }
 
 function startTypingSequence() {
-
     document.getElementById("glitchText").style.display = "none";
 
     typeText("Welcome Kesari Jotsna", function() {
@@ -234,25 +261,50 @@ function startSlideshow() {
 
     let index = 0;
     const img = document.getElementById("slideImage");
-    const caption = document.getElementById("caption");
 
     function showSlide() {
         img.src = photos[index].src;
-        caption.innerText = photos[index].caption;
-
         index++;
-        if (index >= photos.length) index = 0;
+
+        if (index >= photos.length) {
+            clearInterval(slideInterval);
+            setTimeout(showMessagesSection, 3000);
+        }
     }
 
     showSlide();
-    setInterval(showSlide, 4000);
+    let slideInterval = setInterval(showSlide, 4000);
+}
+
+function showMessagesSection() {
+
+    document.getElementById("slideshow").style.display = "none";
+    document.getElementById("messagesSection").style.display = "block";
+    document.body.style.overflowY = "auto";
+
+    let container = document.getElementById("messagesContainer");
+
+    messages.forEach((msg, i) => {
+        let p = document.createElement("p");
+        p.className = "messageLine";
+        p.innerText = msg;
+        container.appendChild(p);
+
+        setTimeout(() => {
+            p.style.opacity = 1;
+        }, i * 1500);
+    });
+
+    setTimeout(() => {
+        document.getElementById("letter1").style.opacity = 1;
+    }, messages.length * 1500 + 1000);
+
+    setTimeout(() => {
+        document.getElementById("letter2").style.opacity = 1;
+    }, messages.length * 1500 + 3000);
 }
 
 </script>
 
 </body>
 </html>
-
-
-
-
