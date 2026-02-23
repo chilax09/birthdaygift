@@ -1,193 +1,191 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Memory Vault</title>
+<title>Happy Birthday Keshuu 🎂</title>
 
 <style>
 body {
     margin: 0;
     font-family: 'Courier New', monospace;
-    background: black;
+    background-color: black;
     color: white;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
-/* HEADER SLIDESHOW */
-#headerSlideshow {
-    height: 40vh;
-    width: 100%;
-    overflow: hidden;
+/* SLIDESHOW HEADER */
+.slideshow-container {
     position: relative;
+    width: 100%;
+    height: 80vh; /* BIGGER */
+    overflow: hidden;
 }
 
-#headerImage {
+.slide {
+    position: absolute;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
 }
 
-/* PAGE SECTION */
-#pageWrapper {
-    width: 400vw;
-    height: 50vh;
-    display: flex;
-    transition: transform 0.6s ease-in-out;
-}
-
-.page {
-    width: 100vw;
-    padding: 30px 60px;
-    box-sizing: border-box;
-    overflow-y: auto;
-}
-
-.page h2 {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.page p {
-    line-height: 1.7;
-    margin-bottom: 15px;
-}
-
-/* LETTER IMAGES */
-.letterImage {
+.slide img {
     width: 100%;
-    margin-bottom: 20px;
+    height: 100%;
+    object-fit: contain; /* SHOW FULL IMAGE */
+    background-color: black;
+}
+
+.active {
+    opacity: 1;
+}
+
+/* LETTER SECTION */
+.page {
+    display: none;
+    padding: 80px 20px;
+    min-height: 100vh;
+}
+
+.page.active-page {
+    display: block;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
 }
 
 /* NAVIGATION */
-#navigation {
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    font-size: 20px;
+.navigation {
+    text-align: center;
+    margin: 40px 0;
 }
 
-.navBtn {
-    cursor: pointer;
-    padding: 8px 20px;
+button {
+    background-color: black;
     border: 1px solid white;
-    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 0 10px;
 }
 
-.navBtn:hover {
-    background: white;
+button:hover {
+    background-color: white;
     color: black;
+}
+
+.counter {
+    font-size: 18px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER SLIDESHOW -->
-<div id="headerSlideshow">
-    <img id="headerImage">
+<!-- 💕 SLIDESHOW HEADER -->
+<div class="slideshow-container">
+    <div class="slide active">
+        <img src="photo1.jpg">
+    </div>
+    <div class="slide">
+        <img src="photo2.jpg">
+    </div>
+    <div class="slide">
+        <img src="photo3.jpg">
+    </div>
 </div>
 
-<!-- PAGES -->
-<div id="pageWrapper">
+<!-- 💌 PAGE 1 -->
+<div class="page active-page">
+    <h1>From Your Parents 💖</h1>
 
-    <!-- PAGE 1 -->
-    <div class="page">
-        <h2>From Your Parents 💖</h2>
-        <p>Hi Keshu! Wishing you a Happy Birthday, dear! 🎉</p>
-        <p>You are truly a wonderful soul — always caring, always helping, and a cherished friend to everyone around you.</p>
-        <p>May your day be filled with joy, love and blessings.</p>
-        <p>With all our love, your parents.</p>
-    </div>
+    <p>Hi Keshu! Wishing you a Happy Birthday, dear! 🎉</p>
 
-    <!-- PAGE 2 -->
-    <div class="page">
-        <h2>From Your Bestie ❤️</h2>
-        <p>To my lovely bestie, Happy Birthday ❤️</p>
-        <p>The way you love us is really special.</p>
-        <p>Don’t know what to say — everything about you is special to me.</p>
-        <p>Hope this continues till the stars go.</p>
-        <p>Love you soo much Keshuu.</p>
-    </div>
+    <p>You are truly a wonderful soul — always caring, always helping, and a cherished friend to everyone around you.</p>
 
-    <!-- PAGE 3 -->
-    <div class="page">
-        <h2>Handwritten Letters ✉️</h2>
-        <img src="letter1.jpeg" class="letterImage">
-        <img src="letter2.jpeg" class="letterImage">
-    </div>
+    <p>May your day be filled with joy, love and blessings.</p>
 
-    <!-- PAGE 4 -->
-    <div class="page">
-        <h2>From Me 🌙</h2>
-        <p>Now this one is from me...</p>
-        <p>I don’t even know where to start.</p>
-        <p>You’ve made my life brighter in more ways than you realise.</p>
-        <p>17 looks beautiful on you.</p>
-        <p>And I’m always, always going to be right here.</p>
-    </div>
+    <p>With all our love, your parents.</p>
 
+    <br><br>
+    <p>--------------------------------------------------</p>
 </div>
 
-<!-- NAVIGATION -->
-<div id="navigation">
-    <div class="navBtn" onclick="prevPage()">◀</div>
-    <div id="pageIndicator">1 / 4</div>
-    <div class="navBtn" onclick="nextPage()">▶</div>
+<!-- 💌 PAGE 2 -->
+<div class="page">
+    <h1>From Your Bestie ❤️</h1>
+
+    <p>To my lovely bestie, Happy Birthday ❤️</p>
+
+    <p>The way you love us is really special.</p>
+
+    <p>Don’t know what to say — everything about you is special to me.</p>
+
+    <p>Hope this continues till the stars go.</p>
+
+    <p>Love you soo much Keshuu.</p>
+</div>
+
+<!-- 💌 PAGE 3 -->
+<div class="page">
+    <h1>Letter Images 🖼️</h1>
+
+    <img src="letter1.jpg" style="width:100%; margin-bottom:30px;">
+    <img src="letter2.jpg" style="width:100%;">
+</div>
+
+<!-- 💌 PAGE 4 -->
+<div class="page">
+    <h1>From Me 💕</h1>
+
+    <p>You deserve the whole world.</p>
+
+    <p>Thank you for being my person, my comfort, my happiness.</p>
+
+    <p>I’ll always be here for you.</p>
+</div>
+
+<!-- 🔁 NAVIGATION -->
+<div class="navigation">
+    <button onclick="changePage(-1)">◀</button>
+    <span class="counter" id="counter">1 / 4</span>
+    <button onclick="changePage(1)">▶</button>
 </div>
 
 <script>
+let slides = document.querySelectorAll(".slide");
+let currentSlide = 0;
 
-/* HEADER SLIDESHOW */
-const photos = [
-    "photo1.jpeg","photo5.jpeg","photo3.jpeg","photo2.jpeg",
-    "photo9.jpeg","photo12.jpeg","photo11.jpeg","photo10.jpeg",
-    "photo13.jpeg","photo14.jpeg","photo8.jpg",
-    "photo6.jpeg","photo7.jpeg","photo4.jpeg","photo15.jpeg"
-];
-
-let headerIndex = 0;
-const headerImage = document.getElementById("headerImage");
-
-function startHeaderSlideshow() {
-    headerImage.src = photos[headerIndex];
-    headerIndex++;
-
-    if (headerIndex >= photos.length) {
-        headerIndex = 0;
+function showSlides() {
+    slides.forEach(slide => slide.classList.remove("active"));
+    currentSlide++;
+    if (currentSlide >= slides.length) {
+        currentSlide = 0;
     }
-
-    setTimeout(startHeaderSlideshow, 4000);
+    slides[currentSlide].classList.add("active");
 }
 
-startHeaderSlideshow();
+setInterval(showSlides, 3000);
 
 /* PAGE NAVIGATION */
-
+let pages = document.querySelectorAll(".page");
 let currentPage = 0;
-const totalPages = 4;
-const wrapper = document.getElementById("pageWrapper");
-const indicator = document.getElementById("pageIndicator");
+let counter = document.getElementById("counter");
 
-function updatePage() {
-    wrapper.style.transform = "translateX(-" + (currentPage * 100) + "vw)";
-    indicator.innerText = (currentPage + 1) + " / " + totalPages;
+function changePage(direction) {
+    pages[currentPage].classList.remove("active-page");
+    currentPage += direction;
+
+    if (currentPage < 0) currentPage = 0;
+    if (currentPage >= pages.length) currentPage = pages.length - 1;
+
+    pages[currentPage].classList.add("active-page");
+    counter.innerText = (currentPage + 1) + " / " + pages.length;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function nextPage() {
-    if (currentPage < totalPages - 1) {
-        currentPage++;
-        updatePage();
-    }
-}
-
-function prevPage() {
-    if (currentPage > 0) {
-        currentPage--;
-        updatePage();
-    }
-}
-
 </script>
 
 </body>
