@@ -72,15 +72,15 @@ button {
 
 .messageLine {
     opacity: 0;
-    margin: 18px 0;
+    margin: 22px 0;
     transition: opacity 1.2s ease;
     font-size: 19px;
-    line-height: 1.6;
+    line-height: 1.8;
 }
 
 .letterImage {
     width: 100%;
-    margin-top: 40px;
+    margin-top: 50px;
     opacity: 0;
     transition: opacity 2s ease;
 }
@@ -120,7 +120,6 @@ h2 {
     <h2>💌 Heartfelt Messages</h2>
     <div id="messagesContainer"></div>
 
-    <!-- Image Letters -->
     <img src="letter1.jpeg" id="letter1" class="letterImage">
     <img src="letter2.jpeg" id="letter2" class="letterImage">
 </div>
@@ -156,8 +155,7 @@ const messages = [
 "May your day be filled with joy, love and blessings.",
 "With all our love, your parents.",
 
-"",
-"",
+"DIVIDER",
 
 "To my lovely bestie, Happy Birthday ❤️",
 "The way you love us is really special.",
@@ -165,8 +163,7 @@ const messages = [
 "Hope this continues till the stars go.",
 "Love you soo much Keshuu.",
 
-"",
-"",
+"DIVIDER",
 
 "Now this one is from me...",
 "I don’t even know where to start.",
@@ -298,25 +295,58 @@ function showMessagesSection() {
     document.body.style.overflowY = "auto";
 
     let container = document.getElementById("messagesContainer");
+    let delay = 0;
 
-    messages.forEach((msg, i) => {
+    messages.forEach((msg) => {
+
         let p = document.createElement("p");
         p.className = "messageLine";
-        p.innerText = msg;
         container.appendChild(p);
 
-        setTimeout(() => {
-            p.style.opacity = 1;
-        }, i * 1400);
+        if (msg === "DIVIDER") {
+
+            setTimeout(() => {
+                animateDivider(p);
+            }, delay);
+
+            delay += 2000;
+
+        } else {
+
+            p.innerText = msg;
+
+            setTimeout(() => {
+                p.style.opacity = 1;
+            }, delay);
+
+            delay += 1400;
+        }
+
     });
 
     setTimeout(() => {
         document.getElementById("letter1").style.opacity = 1;
-    }, messages.length * 1400 + 1000);
+    }, delay + 1000);
 
     setTimeout(() => {
         document.getElementById("letter2").style.opacity = 1;
-    }, messages.length * 1400 + 3000);
+    }, delay + 3000);
+}
+
+function animateDivider(element) {
+
+    let count = 0;
+    element.style.opacity = 1;
+
+    function addDash() {
+        if (count < 30) {
+            element.innerText += "-";
+            count++;
+            setTimeout(addDash, 40);
+        }
+    }
+
+    addDash();
 }
 
 </script>
