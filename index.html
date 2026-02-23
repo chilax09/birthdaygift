@@ -263,13 +263,15 @@ function startSlideshow() {
     const img = document.getElementById("slideImage");
 
     function showSlide() {
-        img.src = photos[index].src;
-        index++;
 
         if (index >= photos.length) {
             clearInterval(slideInterval);
-            setTimeout(showMessagesSection, 3000);
+            setTimeout(showMessagesSection, 2000);
+            return;
         }
+
+        img.src = photos[index].src;
+        index++;
     }
 
     showSlide();
@@ -308,4 +310,5 @@ function showMessagesSection() {
 
 </body>
 </html>
+
 
