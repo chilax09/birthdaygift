@@ -9,344 +9,183 @@ body {
     font-family: 'Courier New', monospace;
     background: black;
     color: white;
-    text-align: center;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
-.center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/* HEADER SLIDESHOW */
+#headerSlideshow {
+    height: 40vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
 }
 
-input {
-    padding: 10px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-}
-
-button {
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    background: hotpink;
-    color: white;
-    cursor: pointer;
-}
-
-#verifying, #glitchScreen, #slideshow, #messagesSection {
-    display: none;
-}
-
-.glitch {
-    font-size: 35px;
-    animation: glitch 0.15s infinite;
-}
-
-@keyframes glitch {
-    0% { text-shadow: 2px 2px red; }
-    50% { text-shadow: -2px -2px blue; }
-    100% { text-shadow: 2px -2px lime; }
-}
-
-#slideshow {
-    width: 100vw;
-    height: 100vh;
-    background: black;
-}
-
-#slideImage {
+#headerImage {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-#messagesSection {
-    padding: 80px 20px;
-    max-width: 850px;
-    margin: auto;
-    text-align: left;
+/* PAGE SECTION */
+#pageWrapper {
+    width: 400vw;
+    height: 50vh;
+    display: flex;
+    transition: transform 0.6s ease-in-out;
 }
 
-.messageLine {
-    opacity: 0;
-    margin: 22px 0;
-    transition: opacity 1.2s ease;
-    font-size: 19px;
-    line-height: 1.8;
+.page {
+    width: 100vw;
+    padding: 30px 60px;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
+.page h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.page p {
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+/* LETTER IMAGES */
 .letterImage {
     width: 100%;
-    margin-top: 50px;
-    opacity: 0;
-    transition: opacity 2s ease;
+    margin-bottom: 20px;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 50px;
+/* NAVIGATION */
+#navigation {
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-size: 20px;
+}
+
+.navBtn {
+    cursor: pointer;
+    padding: 8px 20px;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.navBtn:hover {
+    background: white;
+    color: black;
 }
 </style>
 </head>
 
 <body>
 
-<div id="login" class="center">
-    <h1>🔐 Memory Vault</h1>
-    <p>Identity verification required.</p>
-    <input type="number" id="birthSum" placeholder="Sum of your birthday"><br>
-    <input type="number" id="age" placeholder="Your age"><br>
-    <button onclick="checkAccess()">Unlock</button>
-    <p id="message"></p>
+<!-- HEADER SLIDESHOW -->
+<div id="headerSlideshow">
+    <img id="headerImage">
 </div>
 
-<div id="verifying" class="center">
-    <h2>Verifying identity...</h2>
+<!-- PAGES -->
+<div id="pageWrapper">
+
+    <!-- PAGE 1 -->
+    <div class="page">
+        <h2>From Your Parents 💖</h2>
+        <p>Hi Keshu! Wishing you a Happy Birthday, dear! 🎉</p>
+        <p>You are truly a wonderful soul — always caring, always helping, and a cherished friend to everyone around you.</p>
+        <p>May your day be filled with joy, love and blessings.</p>
+        <p>With all our love, your parents.</p>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page">
+        <h2>From Your Bestie ❤️</h2>
+        <p>To my lovely bestie, Happy Birthday ❤️</p>
+        <p>The way you love us is really special.</p>
+        <p>Don’t know what to say — everything about you is special to me.</p>
+        <p>Hope this continues till the stars go.</p>
+        <p>Love you soo much Keshuu.</p>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="page">
+        <h2>Handwritten Letters ✉️</h2>
+        <img src="letter1.jpeg" class="letterImage">
+        <img src="letter2.jpeg" class="letterImage">
+    </div>
+
+    <!-- PAGE 4 -->
+    <div class="page">
+        <h2>From Me 🌙</h2>
+        <p>Now this one is from me...</p>
+        <p>I don’t even know where to start.</p>
+        <p>You’ve made my life brighter in more ways than you realise.</p>
+        <p>17 looks beautiful on you.</p>
+        <p>And I’m always, always going to be right here.</p>
+    </div>
+
 </div>
 
-<div id="glitchScreen" class="center">
-    <div id="glitchText" class="glitch">USER FOUND.</div>
-    <div id="typedText" style="margin-top:20px; font-size:28px;"></div>
+<!-- NAVIGATION -->
+<div id="navigation">
+    <div class="navBtn" onclick="prevPage()">◀</div>
+    <div id="pageIndicator">1 / 4</div>
+    <div class="navBtn" onclick="nextPage()">▶</div>
 </div>
-
-<div id="slideshow">
-    <img id="slideImage">
-</div>
-
-<div id="messagesSection">
-    <h2>💌 Heartfelt Messages</h2>
-    <div id="messagesContainer"></div>
-
-    <img src="letter1.jpeg" id="letter1" class="letterImage">
-    <img src="letter2.jpeg" id="letter2" class="letterImage">
-</div>
-
-<audio id="typingSound" preload="auto" src="typing.mp3"></audio>
 
 <script>
 
-let typingAudio = document.getElementById("typingSound");
-
+/* HEADER SLIDESHOW */
 const photos = [
-    {src:"photo1.jpeg"},
-    {src:"photo5.jpeg"},
-    {src:"photo3.jpeg"},
-    {src:"photo2.jpeg"},
-    {src:"photo9.jpeg"},
-    {src:"photo12.jpeg"},
-    {src:"photo11.jpeg"},
-    {src:"photo10.jpeg"},
-    {src:"photo13.jpeg"},
-    {src:"photo14.jpeg"},
-    {src:"photo8.jpg"},
-    {src:"photo6.jpeg"},
-    {src:"photo7.jpeg"},
-    {src:"photo4.jpeg"},
-    {src:"photo15.jpeg"}
+    "photo1.jpeg","photo5.jpeg","photo3.jpeg","photo2.jpeg",
+    "photo9.jpeg","photo12.jpeg","photo11.jpeg","photo10.jpeg",
+    "photo13.jpeg","photo14.jpeg","photo8.jpg",
+    "photo6.jpeg","photo7.jpeg","photo4.jpeg","photo15.jpeg"
 ];
 
-const messages = [
+let headerIndex = 0;
+const headerImage = document.getElementById("headerImage");
 
-"Hi Keshu! Wishing you a Happy Birthday, dear! 🎉",
-"You are truly a wonderful soul — always caring, always helping, and a cherished friend to everyone around you.",
-"May your day be filled with joy, love and blessings.",
-"With all our love, your parents.",
+function startHeaderSlideshow() {
+    headerImage.src = photos[headerIndex];
+    headerIndex++;
 
-"DIVIDER",
+    if (headerIndex >= photos.length) {
+        headerIndex = 0;
+    }
 
-"To my lovely bestie, Happy Birthday ❤️",
-"The way you love us is really special.",
-"Don’t know what to say — everything about you is special to me.",
-"Hope this continues till the stars go.",
-"Love you soo much Keshuu.",
-
-"DIVIDER",
-
-"Now this one is from me...",
-"I don’t even know where to start.",
-"You’ve made my life brighter in more ways than you realise.",
-"17 looks beautiful on you.",
-"And I’m always, always going to be right here."
-];
-
-function unlockAudio() {
-    typingAudio.volume = 0;
-    typingAudio.play().then(() => {
-        typingAudio.pause();
-        typingAudio.currentTime = 0;
-    }).catch(()=>{});
+    setTimeout(startHeaderSlideshow, 4000);
 }
 
-function checkAccess() {
+startHeaderSlideshow();
 
-    unlockAudio();
+/* PAGE NAVIGATION */
 
-    if (
-        document.getElementById("birthSum").value === "9" &&
-        document.getElementById("age").value === "17"
-    ) {
+let currentPage = 0;
+const totalPages = 4;
+const wrapper = document.getElementById("pageWrapper");
+const indicator = document.getElementById("pageIndicator");
 
-        document.getElementById("login").style.display = "none";
-        document.getElementById("verifying").style.display = "block";
+function updatePage() {
+    wrapper.style.transform = "translateX(-" + (currentPage * 100) + "vw)";
+    indicator.innerText = (currentPage + 1) + " / " + totalPages;
+}
 
-        setTimeout(function() {
-            document.getElementById("verifying").style.display = "none";
-            document.getElementById("glitchScreen").style.display = "block";
-            setTimeout(startTypingSequence, 1000);
-        }, 2000);
-
-    } else {
-        document.getElementById("message").innerText =
-            "Access denied. Imposter detected.";
+function nextPage() {
+    if (currentPage < totalPages - 1) {
+        currentPage++;
+        updatePage();
     }
 }
 
-function typeText(text, callback) {
-    let i = 0;
-    const typedText = document.getElementById("typedText");
-    typedText.innerHTML = "";
-
-    typingAudio.volume = 0.25;
-    typingAudio.loop = true;
-    typingAudio.play();
-
-    function typing() {
-        if (i < text.length) {
-            typedText.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(typing, 80);
-        } else {
-            typingAudio.pause();
-            typingAudio.currentTime = 0;
-            if (callback) setTimeout(callback, 1000);
-        }
+function prevPage() {
+    if (currentPage > 0) {
+        currentPage--;
+        updatePage();
     }
-
-    typing();
-}
-
-function eraseText(callback) {
-    const typedText = document.getElementById("typedText");
-    let text = typedText.innerHTML;
-    let i = text.length;
-
-    function deleting() {
-        if (i > 0) {
-            typedText.innerHTML = text.substring(0, i - 1);
-            i--;
-            setTimeout(deleting, 40);
-        } else if (callback) {
-            setTimeout(callback, 500);
-        }
-    }
-
-    deleting();
-}
-
-function startTypingSequence() {
-    document.getElementById("glitchText").style.display = "none";
-
-    typeText("Welcome Kesari Jotsna", function() {
-        eraseText(function() {
-            typeText("Hope you have a great 17th birthday", function() {
-                eraseText(function() {
-                    typeText("Sit back and enjoy the show.", function() {
-                        setTimeout(function() {
-                            document.getElementById("glitchScreen").style.display = "none";
-                            startSlideshow();
-                        }, 1000);
-                    });
-                });
-            });
-        });
-    });
-}
-
-function startSlideshow() {
-
-    document.getElementById("slideshow").style.display = "block";
-
-    let index = 0;
-    const img = document.getElementById("slideImage");
-
-    function showNextSlide() {
-
-        if (index >= photos.length) {
-            document.getElementById("slideshow").style.display = "none";
-            showMessagesSection();
-            return;
-        }
-
-        img.src = photos[index].src;
-        index++;
-
-        setTimeout(showNextSlide, 4000);
-    }
-
-    showNextSlide();
-}
-
-function showMessagesSection() {
-
-    document.getElementById("messagesSection").style.display = "block";
-    document.body.style.overflowY = "auto";
-
-    let container = document.getElementById("messagesContainer");
-    let delay = 0;
-
-    messages.forEach((msg) => {
-
-        let p = document.createElement("p");
-        p.className = "messageLine";
-        container.appendChild(p);
-
-        if (msg === "DIVIDER") {
-
-            setTimeout(() => {
-                animateDivider(p);
-            }, delay);
-
-            delay += 2000;
-
-        } else {
-
-            p.innerText = msg;
-
-            setTimeout(() => {
-                p.style.opacity = 1;
-            }, delay);
-
-            delay += 1400;
-        }
-
-    });
-
-    setTimeout(() => {
-        document.getElementById("letter1").style.opacity = 1;
-    }, delay + 1000);
-
-    setTimeout(() => {
-        document.getElementById("letter2").style.opacity = 1;
-    }, delay + 3000);
-}
-
-function animateDivider(element) {
-
-    let count = 0;
-    element.style.opacity = 1;
-
-    function addDash() {
-        if (count < 30) {
-            element.innerText += "-";
-            count++;
-            setTimeout(addDash, 40);
-        }
-    }
-
-    addDash();
 }
 
 </script>
